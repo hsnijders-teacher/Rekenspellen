@@ -1,0 +1,438 @@
+Je bent een ervaren gameontwikkelaar, UX-designer voor het basisonderwijs en senior JavaScript-programmeur.
+
+Bouw een compleet educatief spel genaamd "Missie Maanbasis".
+
+Doel
+
+Maak een aantrekkelijk rekenspel waarin basisschoolleerlingen de tafels van vermenigvuldiging oefenen terwijl zij een maanbasis bouwen.
+
+Het eindresultaat moet bestaan uit EXACT ÉÉN zelfstandig HTML-bestand met daarin:
+
+HTML
+CSS
+JavaScript
+
+Alles moet in hetzelfde bestand zitten.
+
+Geen externe afhankelijkheden.
+
+Gebruik:
+
+geen frameworks
+geen npm-packages
+geen CDN's
+geen externe fonts
+geen externe afbeeldingen
+
+Het spel moet volledig offline werken op Chromebooks in moderne browsers.
+
+Gebruik uitsluitend:
+
+HTML5
+CSS3
+Vanilla JavaScript
+Doelgroep
+
+Kinderen van 7 t/m 11 jaar.
+
+Ontwerp daarom:
+
+kleurrijk
+vriendelijk
+duidelijk
+grote knoppen
+eenvoudig leesbaar
+positieve feedback
+
+Niet gebruiken:
+
+geweld
+strafsystemen
+levens verliezen
+negatieve boodschappen
+Verhaal
+
+De speler is commandant van een ruimteprogramma.
+
+Door vermenigvuldigingen goed op te lossen verdient de speler grondstoffen.
+
+Met deze grondstoffen bouwt de speler een maanbasis.
+
+Uiteindelijk groeit deze uit tot een complete maanstad.
+
+Algemene spelstructuur
+
+Gameplay-loop:
+
+Som verschijnt
+Leerling geeft antwoord
+Beloning ontvangen
+Grondstoffen verzamelen
+Gebouwen bouwen
+Nieuwe gebieden ontgrendelen
+Moeilijkheid stijgt geleidelijk
+Schermen
+
+Maak minimaal de volgende schermen:
+
+1. Startscherm
+
+Toon:
+
+titel Missie Maanbasis
+Start knop
+Instructies knop
+Reset voortgang knop
+
+Gebruik een ruimteachtergrond.
+
+2. Instructies
+
+Leg eenvoudig uit:
+
+hoe je speelt
+hoe je grondstoffen verdient
+hoe gebouwen werken
+
+Gebruik eenvoudige taal.
+
+3. Hoofdspel
+
+Verdeel het scherm in drie gebieden.
+
+Linkerzijde
+
+Spelerinformatie:
+
+energie
+metaal
+kristallen
+huidige planeet
+level
+Midden
+
+Rekengebied.
+
+Toon:
+
+huidige som
+invoerveld
+antwoordknop
+
+Bijvoorbeeld:
+
+8 × 7 = ?
+
+Rechterzijde
+
+Maanbasis.
+
+Visuele kaart waarop gebouwen verschijnen.
+
+Gebruik eenvoudige SVG, CSS-vormen of Canvas.
+
+Geen externe afbeeldingen.
+
+Planeten
+
+Gebruik een voortgangspad.
+
+Startlocaties:
+
+Aarde
+Maan
+Mars
+Asteroïdengordel
+Ruimtestation
+
+Toon duidelijk wanneer een locatie is bereikt.
+
+Maak hiervoor een mooie visuele tijdlijn.
+
+Tafeloefeningen
+
+Ondersteun:
+
+tafel 1
+tafel 2
+tafel 3
+tafel 4
+tafel 5
+tafel 6
+tafel 7
+tafel 8
+tafel 9
+tafel 10
+Adaptieve moeilijkheid
+
+Het systeem moet per tafel statistieken bijhouden.
+
+Bewaar:
+
+aantal pogingen
+aantal correcte antwoorden
+snelheid
+
+Wanneer een leerling goed scoort:
+
+vaker moeilijkere tafels aanbieden
+
+Wanneer een leerling moeite heeft:
+
+vaker dezelfde tafel tonen
+
+Gebruik een eenvoudig adaptief algoritme.
+
+Opgavetypes
+
+Gebruik afwisselend:
+
+Type A
+
+4 × 6 = ?
+
+Type B
+
+? × 6 = 24
+
+Type C
+
+4 × ? = 24
+
+Type D
+
+Gemengde tafels
+
+Beloningssysteem
+
+Gebruik drie resources.
+
+Energie
+
+Voor ieder goed antwoord.
+
+Metaal
+
+Voor reeksen goede antwoorden.
+
+Kristallen
+
+Zeldzame bonus.
+
+Bijvoorbeeld:
+
+5% kans na een goede som.
+
+Combo's
+
+Bouw een streak-systeem.
+
+3 goed:
+
+"🚀 Boost!"
+
+5 goed:
+
+"⭐ Energiegolf!"
+
+10 goed:
+
+"🌟 Supercombo!"
+
+20 goed:
+
+"☄️ Meteoorbonus!"
+
+Toon mooie animaties.
+
+Gebouwen
+
+Minimaal:
+
+Woonmodule
+
+Kost:
+
+50 energie
+Zonnepark
+
+Kost:
+
+100 energie
+25 metaal
+Onderzoekslab
+
+Kost:
+
+200 energie
+50 metaal
+Communicatietoren
+
+Kost:
+
+300 energie
+100 metaal
+Ruimtehaven
+
+Kost:
+
+500 energie
+200 metaal
+10 kristallen
+Bouwsysteem
+
+Maak een bouwmenu.
+
+Gebouwen worden zichtbaar toegevoegd aan de maanbasis.
+
+Gebruik geanimeerde verschijningseffecten.
+
+De speler moet zelf kiezen wat gebouwd wordt.
+
+Missiesysteem
+
+Dagelijkse missies simuleren.
+
+Voorbeelden:
+
+Los 10 sommen op
+Haal 5 antwoorden achter elkaar goed
+Verdien 100 energie
+
+Beloningen geven.
+
+Badges
+
+Voeg prestaties toe.
+
+Voorbeelden:
+
+Eerste Lancering
+Tafelkampioen
+Ruimte-ingenieur
+Sterrenverkenner
+Maanpionier
+
+Toon badge-popup wanneer deze vrijkomt.
+
+Feedback
+
+Correct antwoord:
+
+groen effect
+positieve melding
+geluid optioneel via Web Audio API
+
+Fout antwoord:
+
+vriendelijk rood/oranje effect
+juiste antwoord tonen
+som later opnieuw aanbieden
+
+Nooit negatieve feedback geven.
+
+Opslaan
+
+Gebruik LocalStorage.
+
+Bewaar:
+
+grondstoffen
+gebouwen
+badges
+statistieken
+voortgang
+huidige planeet
+
+Voortgang moet behouden blijven na browserafsluiting.
+
+Visuele stijl
+
+Thema:
+
+Ruimtevaart + vriendelijke wetenschap.
+
+Kleuren:
+
+donkerblauw
+paars
+cyaan
+geel
+
+Gebruik:
+
+afgeronde panelen
+schaduwen
+animaties
+zwevende sterren
+parallax-effect waar mogelijk
+
+Maak het aantrekkelijk voor kinderen.
+
+Animaties
+
+Voeg toe:
+
+sterren twinkelen
+raketten zweven
+gebouwen verschijnen
+combo-effecten
+resource-tellers tellen op
+
+Gebruik CSS-animaties.
+
+Responsiviteit
+
+Moet goed werken op:
+
+Chromebook laptop
+desktop
+smartboard
+
+Gebruik flexbox of CSS-grid.
+
+Technische eisen
+
+Schrijf nette code.
+
+Gebruik:
+
+ES6 classes
+gestructureerde functies
+comments
+modulaire opbouw binnen één bestand
+
+Gebruik geen eval().
+
+Gebruik geen externe libraries.
+
+Code moet robuust zijn.
+
+Extra functies
+
+Voeg optioneel toe:
+
+achtergrondmuziek aan/uit
+fullscreen knop
+statistiekenscherm
+voortgangsgrafiek met Canvas API
+verschillende raketten vrijspelen
+Kwaliteitseisen
+
+Lever direct een volledig werkend HTML-bestand.
+
+Niet uitleggen hoe het werkt.
+
+Niet samenvatten.
+
+Geef uitsluitend de complete inhoud van het HTML-bestand terug.
+
+Zorg dat het bestand direct opgeslagen kan worden als:
+
+MissieMaanbasis.html
+
+en vervolgens offline geopend kan worden in Chrome op een Chromebook zonder verdere aanpassingen.
+
+Doel: produceer een verrassend compleet, visueel aantrekkelijk en pedagogisch verantwoord educatief spel dat daadwerkelijk speelbaar is en minimaal enkele honderden regels HTML/CSS/JavaScript bevat.
+
+Geef uw feedback over BizChat
