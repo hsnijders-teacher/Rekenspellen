@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missie Maanbasis</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(#050b24,#120b3f);
+color:white;
+height:100vh;
+overflow:hidden;
+}
+
+.screen{
+display:none;
+height:100vh;
+padding:20px;
+}
+
+.active{
+display:flex;
+}
+
+#startScreen,
+#instructionScreen{
+flex-direction:column;
+justify-content:center;
+align-items:center;
+gap:20px;
+text-align:center;
+}
+
+h1{
+font-size:3rem;
+color:#ffd447;
+text-shadow:0 0 15px gold;
+}
+
+button{
+padding:14px 24px;
+border:none;
+border-radius:16px;
+font-size:1.1rem;
+cursor:pointer;
+background:#29c5ff;
+color:#001133;
+font-weight:bold;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+#gameScreen{
+display:grid;
+grid-template-columns:260px 1fr 420px;
+gap:15px;
+padding:15px;
+}
+
+.panel{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(8px);
+padding:15px;
+border-radius:20px;
+box-shadow:0 0 15px rgba(255,255,255,.15);
+}
+
+.resource{
+margin:10px 0;
+font-size:1.2rem;
+}
+
+#question{
+font-size:3rem;
+margin-bottom:25px;
+}
+
+input{
+font-size:1.6rem;
+padding:10px;
+width:150px;
+border-radius:12px;
+border:none;
+text-align:center;
+}
+
+.feedback{
+margin-top:20px;
+font-size:1.4rem;
+min-height:40px;
+font-weight:bold;
+}
+
+.correct{
+color:#54ff8e;
+}
+
+.wrong{
+color:#ffb36b;
+}
+
+.baseArea{
+position:relative;
+height:350px;
+margin-top:10px;
+background:
+radial-gradient(circle at center,#bdbdbd 0,#8d8d8d 70%);
+border-radius:50%;
+overflow:hidden;
+}
+
+.building{
+position:absolute;
+bottom:20px;
+animation:pop .5s;
+}
+
+.house{
+width:70px;
+height:60px;
+background:#68d4ff;
+border-radius:10px;
+}
+
+.solar{
+width:90px;
+height:35px;
+background:#264dff;
+border:3px solid #7ce8ff;
+}
+
+.lab{
+width:90px;
+height:70px;
+background:#ff62c2;
+border-radius:12px;
+}
+
+@keyframes pop{
+from{
+transform:scale(0);
+}
+to{
+transform:scale(1);
+}
+}
+
+.stars{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+overflow:hidden;
+}
+
+.star{
+position:absolute;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:.2;}
+to{opacity:1;}
+}
+
+.combo{
+font-size:2rem;
+color:#ffe34d;
+animation:pop .5s;
+}
+
+.buildBtn{
+width:100%;
+margin-top:8px;
+}
+
+#planetDisplay{
+margin-top:10px;
+font-size:1.2rem;
+color:#ffe555;
+}
+
+@media(max-width:1000px){
+#gameScreen{
+grid-template-columns:1fr;
+overflow:auto;
+height:auto;
+}
+body{
+overflow:auto;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- START -->
+<div id="startScreen" class="screen active">
+<h1>🚀 Missie Maanbasis</h1>
+
+<button onclick="startGame()">Start Missie</button>
+<button onclick="showInstructions()">Instructies</button>
+<button onclick="resetGame()">Reset Voortgang</button>
+</div>
+
+<!-- INSTRUCTIES -->
+<div id="instructionScreen" class="screen">
+<h1>Hoe speel je?</h1>
+
+<p>
+Los tafelsommen op.<br><br>
+Verdien Energie, Metaal en Kristallen.<br><br>
+Gebruik grondstoffen om gebouwen te bouwen.<br><br>
+Laat jouw maanbasis groeien!
+</p>
+
+<br>
+
+<button onclick="backToStart()">Terug</button>
+</div>
+
+<!-- GAME -->
+<div id="gameScreen" class="screen">
+
+<div class="panel">
+
+<h2>Commandant</h2>
+
+<div class="resource">⚡ Energie: <span id="energy">0</span></div>
+<div class="resource">🔩 Metaal: <span id="metal">0</span></div>
+<div class="resource">💎 Kristallen: <span id="crystal">0</span></div>
+
+<div class="resource">
+⭐ Level:
+<span id="level">1</span>
+</div>
+
+<div id="planetDisplay">🌍 Aarde</div>
+
+<hr style="margin:15px 0">
+
+<h3>Bouwen</h3>
+
+<button class="buildBtn"
+onclick="build('house')">
+Woonmodule<br>
+50⚡
+</button>
+
+<button class="buildBtn"
+onclick="build('solar')">
+Zonnepark<br>
+100⚡ 25🔩
+</button>
+
+<button class="buildBtn"
+onclick="build('lab')">
+Onderzoekslab<br>
+200⚡ 50🔩
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>Tafeloefening</h2>
+
+<div id="question"></div>
+
+<input id="answerInput" type="number">
+
+<button onclick="checkAnswer()">
+Antwoord
+</button>
+
+<div id="feedback"
+class="feedback"></div>
+
+<div id="comboArea"></div>
+
+</div>
+
+<div class="panel">
+
+<h2>Maanbasis</h2>
+
+<div class="baseArea" id="baseArea"></div>
+
+</div>
+
+</div>
+
+<script>
+
+class SpaceGame{
+
+constructor(){
+
+this.state=
+JSON.parse(localStorage.getItem("maanbasis")) ||
+
+{
+energy:0,
+metal:0,
+crystal:0,
+level:1,
+correctStreak:0,
+buildings:[],
+questionsAnswered:0
+};
+
+this.currentAnswer=0;
+this.generateQuestion();
+this.render();
+this.renderBuildings();
+}
+
+save(){
+localStorage.setItem(
+"maanbasis",
+JSON.stringify(this.state)
+);
+}
+
+generateQuestion(){
+
+let tafel=
+Math.floor(Math.random()*10)+1;
+
+let factor=
+Math.floor(Math.random()*10)+1;
+
+this.currentAnswer=
+tafel*factor;
+
+document.getElementById("question")
+.innerHTML=
+`${tafel} × ${factor} = ?`;
+}
+
+gainResources(){
+
+this.state.energy+=10;
+
+if(this.state.correctStreak>=3){
+this.state.metal+=2;
+}
+
+if(Math.random()<0.05){
+this.state.crystal+=1;
+}
+
+this.state.questionsAnswered++;
+
+this.state.level=
+Math.floor(
+this.state.questionsAnswered/15
+)+1;
+
+const planets=[
+"🌍 Aarde",
+"🌙 Maan",
+"🔴 Mars",
+"☄️ Asteroïden",
+"🛰️ Ruimtestation"
+];
+
+document.getElementById("planetDisplay")
+.innerText=
+planets[
+Math.min(
+planets.length-1,
+Math.floor(this.state.level/3)
+)
+];
+}
+
+render(){
+
+energy.textContent=this.state.energy;
+metal.textContent=this.state.metal;
+crystal.textContent=this.state.crystal;
+level.textContent=this.state.level;
+
+this.save();
+}
+
+renderBuildings(){
+
+const area=
+document.getElementById("baseArea");
+
+area.innerHTML="";
+
+this.state.buildings.forEach((type,i)=>{
+
+const div=
+document.createElement("div");
+
+div.classList.add("building");
+
+div.style.left=
+(20+(i*80)%300)+"px";
+
+if(type==="house")
+div.classList.add("house");
+
+if(type==="solar")
+div.classList.add("solar");
+
+if(type==="lab")
+div.classList.add("lab");
+
+area.appendChild(div);
+
+});
+
+}
+
+}
+
+let game;
+
+function startGame(){
+
+switchScreen("gameScreen");
+
+if(!game){
+game=new SpaceGame();
+}
+
+answerInput.focus();
+}
+
+function showInstructions(){
+switchScreen("instructionScreen");
+}
+
+function backToStart(){
+switchScreen("startScreen");
+}
+
+function switchScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+document
+.getElementById(id)
+.classList.add("active");
+}
+
+function checkAnswer(){
+
+const value=
+Number(answerInput.value);
+
+if(value===game.currentAnswer){
+
+game.state.correctStreak++;
+
+game.gainResources();
+
+feedback.innerHTML=
+"✅ Goed gedaan commandant!";
+feedback.className=
+"feedback correct";
+
+showCombo();
+
+game.render();
+
+}else{
+
+feedback.innerHTML=
+`💡 Goed geprobeerd! Antwoord was ${game.currentAnswer}`;
+
+feedback.className=
+"feedback wrong";
+
+game.state.correctStreak=0;
+}
+
+answerInput.value="";
+
+game.generateQuestion();
+game.render();
+}
+
+function showCombo(){
+
+let text="";
+
+if(game.state.correctStreak===3)
+text="🚀 Boost!";
+
+if(game.state.correctStreak===5)
+text="⭐ Energiegolf!";
+
+if(game.state.correctStreak===10)
+text="🌟 Supercombo!";
+
+if(game.state.correctStreak===20)
+text="☄️ Meteoorbonus!";
+
+comboArea.innerHTML=
+text ? `<div class='combo'>${text}</div>` : "";
+}
+
+function build(type){
+
+let cost={
+house:{
+energy:50,
+metal:0
+},
+solar:{
+energy:100,
+metal:25
+},
+lab:{
+energy:200,
+metal:50
+}
+};
+
+let item=cost[type];
+
+if(
+game.state.energy>=item.energy &&
+game.state.metal>=item.metal
+){
+
+game.state.energy-=item.energy;
+game.state.metal-=item.metal;
+
+game.state.buildings.push(type);
+
+game.render();
+game.renderBuildings();
+
+}else{
+
+alert(
+"Nog niet genoeg grondstoffen."
+);
+
+}
+}
+
+function resetGame(){
+
+localStorage.removeItem("maanbasis");
+
+location.reload();
+}
+
+document.addEventListener(
+"keydown",
+e=>{
+if(e.key==="Enter"){
+checkAnswer();
+}
+}
+);
+
+for(let i=0;i<120;i++){
+
+let s=document.createElement("div");
+
+s.className="star";
+
+s.style.left=
+Math.random()*100+"%";
+
+s.style.top=
+Math.random()*100+"%";
+
+s.style.animationDelay=
+Math.random()*2+"s";
+
+document
+.getElementById("stars")
+.appendChild(s);
+}
+
+</script>
+
+</body>
+</html>
